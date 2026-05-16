@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro da Vila do Chaves</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FROALA -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css"
+        rel="stylesheet"
+        type="text/css" />
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js">
+    </script>
+
+</head>
+
+<body>
+
+    <!-- ELEMENTOS DECORATIVOS -->
+
+    <img
+        src="https://png.pngtree.com/png-clipart/20241007/original/pngtree-a-round-wooden-barrel-isolated-png-image_16245535.png"
+        class="barril">
+
+    <img
+        src="https://artpoin.com/wp-content/uploads/2023/07/artpoin-chaves.png"
+        class="chapeu">
+
+    <div class="placa">
+        Vila do Chaves
+    </div>
+
+    <img
+        src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEissqdX2A5oE_kTH-iv1E98I5SffxLttnMHSeHd336REwzCVbWciKel5DXaXppJoh_dzXAJhbyTBns5F2eFJwzWB8ro75WOQCXTQkxX3GsxVLeRpXF7sCuU6gd6NZZUlMv4GTQJklXAVfQ/s1600/chaves.png"
+        class="personagem">
+
+    <!-- FORMULÁRIO -->
+
+    <form
+        action=""
+        method="POST"
+        onsubmit="return processar_formulario()">
+
+        <h1>Cadastro da Vila</h1>
+
+        <!-- NOME -->
+
+        <div class="form-group">
+
+            <label for="nome">
+                Nome da vila:
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Digite seu apelido da vila..."
+                required>
+
+        </div>
+
+        <!-- DATA -->
+
+        <div class="form-group">
+
+            <label for="data_nascimento">
+                Quando chegou na vila:
+            </label>
+
+            <input
+                type="date"
+                id="data_nascimento"
+                name="data_nascimento"
+                required>
+
+        </div>
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+            <label for="email">
+                Correio da vila:
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Seu correio da vila..."
+                required>
+
+        </div>
+
+        <!-- TELEFONE -->
+
+        <div class="form-group">
+
+            <label for="telefone">
+                Telefone do barril:
+            </label>
+
+            <input
+                type="tel"
+                id="telefone"
+                name="telefone"
+                placeholder="(00) 00000-0000">
+
+        </div>
+
+        <!-- SENHA -->
+
+        <div class="form-group">
+
+            <label for="senha">
+                Senha secreta:
+            </label>
+
+            <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Senha do Seu Madruga">
+
+        </div>
+
+        <!-- COR -->
+
+        <div class="form-group">
+
+            <label for="cor">
+                Cor do chapéu:
+            </label>
+
+            <input
+                type="color"
+                id="cor"
+                name="cor">
+
+        </div>
+
+        <!-- HABILIDADES -->
+
+        <div class="form-group">
+
+            <label>
+                Talentos da vila:
+            </label>
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    value="Sanduíche">
+
+                Comer sanduíche de presunto
+
+            </label>
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    value="Fugir">
+
+                Fugir da Dona Clotilde
+
+            </label>
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    value="Bronca">
+
+                Levar bronca do Seu Madruga
+
+            </label>
+
+        </div>
+
+        <!-- PERSONAGEM -->
+
+        <div class="form-group">
+
+            <label for="personagemFavorito">
+                Morador favorito:
+            </label>
+
+            <select id="personagemFavorito">
+
+                <option>Chaves</option>
+
+                <option>Quico</option>
+
+                <option>Chiquinha</option>
+
+                <option>Seu Madruga</option>
+
+                <option>Dona Florinda</option>
+
+                <option>Professor Girafales</option>
+
+            </select>
+
+        </div>
+
+        <!-- COMENTÁRIOS -->
+
+        <div class="form-group">
+
+            <label for="comentarios">
+                Conte uma história da vila:
+            </label>
+
+            <textarea
+                id="comentarios"
+                rows="5"></textarea>
+
+        </div>
+
+        <!-- BOTÃO -->
+
+        <div class="form-group">
+
+            <input
+                type="submit"
+                value="Entrar na Vila">
+
+        </div>
+
+        <!-- MENSAGEM -->
+
+        <p id="mensagem"></p>
+
+    </form>
+
+    <!-- POPUP PERSONAGEM -->
+
+    <div id="popup-personagem">
+
+        <div class="card-personagem">
+
+            <img id="imagem-personagem">
+
+            <h2 id="nome-personagem"></h2>
+
+            <p id="frase-personagem"></p>
+
+            <button onclick="fecharPopup()">
+                Fechar
+            </button>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        new FroalaEditor('textarea');
+
+        let nome_elem =
+            document.querySelector("#nome");
+
+        let email_elem =
+            document.querySelector("#email");
+
+        let mensagem_elem =
+            document.querySelector("#mensagem");
+
+        /* PERSONAGENS */
+
+        let personagens = [
+
+            {
+
+                nome: "Chaves",
+
+                imagem:
+                "https://i.pinimg.com/736x/3a/71/ac/3a71acfee31123ec82505a56dd8adf66.jpg",
+
+                frase:
+                "Foi sem querer querendo!"
+            },
+
+            {
+
+                nome: "Quico",
+
+                imagem:
+                "https://i.pinimg.com/1200x/bd/68/41/bd6841bfda83b32da3aeafe0ef24a836.jpg",
+
+                frase:
+                "Você não vai com a minha cara?"
+            },
+
+            {
+
+                nome: "Chiquinha",
+
+                imagem:
+                "https://i.pinimg.com/736x/98/34/fc/9834fc95357f31d26de67445f1bacfc6.jpg",
+
+                frase:
+                "Isso, isso, isso!"
+            },
+
+            {
+
+                nome: "Seu Madruga",
+
+                imagem:
+                "https://i.pinimg.com/736x/64/03/03/640303623dc34e1516b24176d0b9e690.jpg",
+
+                frase:
+                "Cale-se, Cale-se, Cale-se, assim você me deixa louco!"
+            }
+
+        ];
+
+        function processar_formulario(){
+
+            let nome =
+                nome_elem.value;
+
+            let email =
+                email_elem.value;
+
+            if(nome === ""){
+
+                mensagem_elem.innerHTML =
+                    "O Chaves esqueceu seu nome!";
+
+                return false;
+            }
+
+            if(email === ""){
+
+                mensagem_elem.innerHTML =
+                    "Digite o correio da vila!";
+
+                return false;
+            }
+
+            mensagem_elem.innerHTML =
+                "Você agora faz parte da vila!";
+
+            mostrarPersonagem();
+
+            return false;
+        }
+
+        function mostrarPersonagem(){
+
+            let aleatorio =
+                personagens[
+                    Math.floor(
+                        Math.random() *
+                        personagens.length
+                    )
+                ];
+
+            document.querySelector(
+                "#imagem-personagem"
+            ).src = aleatorio.imagem;
+
+            document.querySelector(
+                "#nome-personagem"
+            ).innerHTML = aleatorio.nome;
+
+            document.querySelector(
+                "#frase-personagem"
+            ).innerHTML = aleatorio.frase;
+
+            document.querySelector(
+                "#popup-personagem"
+            ).style.display = "flex";
+        }
+
+        function fecharPopup(){
+
+            document.querySelector(
+                "#popup-personagem"
+            ).style.display = "none";
+        }
+
+    </script>
+
+</body>
+</html>
